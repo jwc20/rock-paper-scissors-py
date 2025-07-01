@@ -1,7 +1,7 @@
 from typing import List
 from itertools import product
 from collections import defaultdict
-
+import random
 
 class Player:
     def __init__(self, name: str, action: int) -> None:
@@ -99,4 +99,17 @@ if __name__ == "__main__":
 
     game_3 = Game(ps, 3)
     # print(game_3.beats)
-    print(game_3.payoff())
+    # print(game_3.payoff())
+
+
+    # simulation
+    action_num = 3
+    for i in range(10): # ten games
+        players = []
+        for i in range(5): # 5 players
+            name = f"player_{i}"
+            players.append(Player(name, random.randrange(0, action_num)))
+        
+        game = Game(players, action_num)
+        print(game.payoff())
+
