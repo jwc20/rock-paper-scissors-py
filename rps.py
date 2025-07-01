@@ -1,4 +1,3 @@
-
 """
 
 1. Players make their actions 
@@ -10,8 +9,6 @@
     - maximum number of players 
 """
 
-
-
 from typing import List
 from itertools import product
 from collections import defaultdict
@@ -19,31 +16,27 @@ from collections import defaultdict
 
 class Player:
     def __init__(self, name: str, action: int) -> None:
-        self._name = name 
+        self._name = name
         self._action = action
-
 
     @property
     def name(self):
         return self._name
-    
-    # @property
-    # def action(self):
-    #     return self.action 
-
-    # @action.setter
-    # def action(self, new_action):
-    #     self.action = new_action
 
 
 class Game:
     def __init__(self, players: List[Player], action_count: int) -> None:
         self._players = players
-        self._action_count = action_count # TODO: must be an odd number
+        self._action_count = action_count  # TODO: must be an odd number
+        self._beats = None
         self.generate_beats()
 
+    @property
+    def beats(self):
+        return self._beats
 
     def generate_beats(self):
+        """this is the logic for creating which actions beat others"""
         beats = defaultdict()
         half = (self._action_count - 1) // 2  # number of actions each one beats
         for i in range(self._action_count):
@@ -52,15 +45,11 @@ class Game:
                 beat_index = (i + k) % self._action_count
                 beat_list.append(beat_index)
             beats[i] = beat_list
-        return beats
-
+        self._beats = beats
 
     # TODO
     def play(self):
         pass
-
-
-
 
 
 if __name__ == "__main__":
@@ -75,15 +64,24 @@ if __name__ == "__main__":
     # game = Game(players, action_count)
     # game.play()
 
-    game_0 = Game([], 2)
-    print(game_0.generate_beats())
+    # game_0 = Game([], 2)
+    # game_0.generate_beats()
+    # print(game_0.beats)
 
-    game_1 = Game([], 3)
-    print(game_1.generate_beats())
+    # game_1 = Game([], 3)
+    # print(game_1.generate_beats())
 
-    game_2 = Game([], 4)
-    print(game_2.generate_beats())
+    # # game_2 = Game([], 4)
+    # # print(game_2.generate_beats())
 
-    game_3 = Game([], 5)
-    print(game_3.generate_beats())
+    # game_3 = Game([], 5)
+    # print(game_3.generate_beats())
 
+    # game_4 = Game([], 7)
+    # print(game_4.generate_beats())
+
+    for i in range(3, 10, 2):
+        current_game_name = f"game_{i}"
+        current_game = Game([], i)
+
+        print(f"game_{i} {current_game.beats}")
