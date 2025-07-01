@@ -33,6 +33,7 @@ class Game:
         self._players = players
         self._action_count = action_count  # TODO: must be an odd number
         self._beats = {}
+        self.check_player_action()
         self.generate_beats()
 
     @property
@@ -52,31 +53,48 @@ class Game:
         self._beats = beats
 
     def payoff(self):
+        """for checking who wins"""
         num_players = len(self._players)
         scores = [0] * num_players
 
         # profiles = list(self._players.action)
 
+
         beats = self._beats
-        profile = [player.action for player in self._players]
-        # print("beats", beats)
-        # print(profile)
-        # print(num_players)
-        
+        profiles = [player.action for player in self._players]
+        print(profiles)
+
+
         for i in range(num_players):
             for j in range(num_players):
                 if i == j:
                     continue
-                a = profile[i]
-                b = profile[j]
+                a = profiles[i]
+                b = profiles[j]
                 if b in beats[a]:
                     scores[i] += 1  # i beats j
                 elif a in beats[b]:
                     scores[i] -= 1  # i loses to j
                 else:
                     pass  # tie, 0 points
-    
+
         return tuple(scores)
+
+    def check_player_action(self):
+        removed = []
+        print(self._players)
+        for i, player in enumerate(self._players):
+            print(player.name, player.action)
+
+            if player.action < 0 or player.action > self._action_count: 
+                print(f"removed: {player.name} with action {player.action}")
+                # removed.append(player)
+                del self._players[i]
+                # self._players.remove(player)
+
+
+        print(removed)
+
 
 
     # TODO
@@ -88,7 +106,6 @@ if __name__ == "__main__":
     pass
     # actions in {rock, paper, scissors, ...} or {0, 1, 2, ...}
 
-
     # players = list(p1, p2, p3)
     # game = Game(players, action_count)
     # game.play()
@@ -98,11 +115,14 @@ if __name__ == "__main__":
     #     current_game = Game([], i)
     #     print(f"game_{i} {current_game.beats}")
 
-
     p1 = Player("jon", 1)
     p2 = Player("don", 2)
     p3 = Player("dave", 1)
+    p4 = Player("dave2", 6)
+    p5 = Player("dave3", -1)
 
-    game_3 = Game([p1, p2, p3], 3)
+    ps = [p1,p2,p3,p4,p5]
+
+    game_3 = Game(ps , 3)
     print(game_3.beats)
     print(game_3.payoff())
