@@ -59,11 +59,9 @@ class Game:
 
         # profiles = list(self._players.action)
 
-
         beats = self._beats
         profiles = [player.action for player in self._players]
         print(profiles)
-
 
         for i in range(num_players):
             for j in range(num_players):
@@ -81,21 +79,13 @@ class Game:
         return tuple(scores)
 
     def check_player_action(self):
-        removed = []
-        print(self._players)
-        for i, player in enumerate(self._players):
-            print(player.name, player.action)
+        valid_players = []
 
-            if player.action < 0 or player.action > self._action_count: 
-                print(f"removed: {player.name} with action {player.action}")
-                # removed.append(player)
-                del self._players[i]
-                # self._players.remove(player)
-
-
-        print(removed)
-
-
+        for player in self._players:
+            if 0 <= player.action < self._action_count:
+                valid_players.append(player)
+        # print("removed", [(p.name, p.action) for p in self._players if p not in valid_players])
+        self._players = valid_players
 
     # TODO
     def play(self):
@@ -121,8 +111,8 @@ if __name__ == "__main__":
     p4 = Player("dave2", 6)
     p5 = Player("dave3", -1)
 
-    ps = [p1,p2,p3,p4,p5]
+    ps = [p1, p2, p3, p4, p5]
 
-    game_3 = Game(ps , 3)
+    game_3 = Game(ps, 3)
     print(game_3.beats)
     print(game_3.payoff())
