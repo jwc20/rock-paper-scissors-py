@@ -1,14 +1,3 @@
-"""
-
-1. Players make their actions 
-    - actions depend on the number of actions
-
-2. Game rules are set
-    - number of actions (action_count) 
-    - number of rounds
-    - maximum number of players 
-"""
-
 from typing import List
 from itertools import product
 from collections import defaultdict
@@ -61,8 +50,8 @@ class Game:
 
         beats = self._beats
         profiles = [player.action for player in self._players]
-        print(profiles)
 
+        # TODO: double loop
         for i in range(num_players):
             for j in range(num_players):
                 if i == j:
@@ -80,12 +69,12 @@ class Game:
 
     def check_player_action(self):
         valid_players = []
-
         for player in self._players:
             if 0 <= player.action < self._action_count:
                 valid_players.append(player)
         # print("removed", [(p.name, p.action) for p in self._players if p not in valid_players])
         self._players = valid_players
+
 
     # TODO
     def play(self):
@@ -93,13 +82,7 @@ class Game:
 
 
 if __name__ == "__main__":
-    pass
-    # actions in {rock, paper, scissors, ...} or {0, 1, 2, ...}
-
-    # players = list(p1, p2, p3)
-    # game = Game(players, action_count)
-    # game.play()
-
+    # test beats
     # for i in range(3, 10, 2):
     #     current_game_name = f"game_{i}"
     #     current_game = Game([], i)
@@ -110,9 +93,10 @@ if __name__ == "__main__":
     p3 = Player("dave", 1)
     p4 = Player("dave2", 6)
     p5 = Player("dave3", -1)
+    p6 = Player("dave4", 2)
 
-    ps = [p1, p2, p3, p4, p5]
+    ps = [p1, p2, p3, p4, p5, p6]
 
     game_3 = Game(ps, 3)
-    print(game_3.beats)
+    # print(game_3.beats)
     print(game_3.payoff())
