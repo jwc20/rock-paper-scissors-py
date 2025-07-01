@@ -23,12 +23,16 @@ class Player:
     def name(self):
         return self._name
 
+    @property
+    def action(self):
+        return self._action
+
 
 class Game:
     def __init__(self, players: List[Player], action_count: int) -> None:
         self._players = players
         self._action_count = action_count  # TODO: must be an odd number
-        self._beats = None
+        self._beats = {}
         self.generate_beats()
 
     @property
@@ -37,7 +41,7 @@ class Game:
 
     def generate_beats(self):
         """this is the logic for creating which actions beat others"""
-        beats = defaultdict()
+        beats = {}
         half = (self._action_count - 1) // 2  # number of actions each one beats
         for i in range(self._action_count):
             beat_list = []
@@ -46,6 +50,34 @@ class Game:
                 beat_list.append(beat_index)
             beats[i] = beat_list
         self._beats = beats
+
+    def payoff(self):
+        num_players = len(self._players)
+        scores = [0] * num_players
+
+        # profiles = list(self._players.action)
+
+        beats = self._beats
+        profile = [player.action for player in self._players]
+        # print("beats", beats)
+        # print(profile)
+        # print(num_players)
+        
+        for i in range(num_players):
+            for j in range(num_players):
+                if i == j:
+                    continue
+                a = profile[i]
+                b = profile[j]
+                if b in beats[a]:
+                    scores[i] += 1  # i beats j
+                elif a in beats[b]:
+                    scores[i] -= 1  # i loses to j
+                else:
+                    pass  # tie, 0 points
+    
+        return tuple(scores)
+
 
     # TODO
     def play(self):
@@ -56,32 +88,21 @@ if __name__ == "__main__":
     pass
     # actions in {rock, paper, scissors, ...} or {0, 1, 2, ...}
 
-    # p1 = Player("jon", 1)
-    # p2 = Player("don", 2)
-    # p3 = Player("dave", 0)
 
     # players = list(p1, p2, p3)
     # game = Game(players, action_count)
     # game.play()
 
-    # game_0 = Game([], 2)
-    # game_0.generate_beats()
-    # print(game_0.beats)
+    # for i in range(3, 10, 2):
+    #     current_game_name = f"game_{i}"
+    #     current_game = Game([], i)
+    #     print(f"game_{i} {current_game.beats}")
 
-    # game_1 = Game([], 3)
-    # print(game_1.generate_beats())
 
-    # # game_2 = Game([], 4)
-    # # print(game_2.generate_beats())
+    p1 = Player("jon", 1)
+    p2 = Player("don", 2)
+    p3 = Player("dave", 1)
 
-    # game_3 = Game([], 5)
-    # print(game_3.generate_beats())
-
-    # game_4 = Game([], 7)
-    # print(game_4.generate_beats())
-
-    for i in range(3, 10, 2):
-        current_game_name = f"game_{i}"
-        current_game = Game([], i)
-
-        print(f"game_{i} {current_game.beats}")
+    game_3 = Game([p1, p2, p3], 3)
+    print(game_3.beats)
+    print(game_3.payoff())
