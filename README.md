@@ -2,9 +2,9 @@
 
 ## motivation
 
-- want to get the winners of multi-action (rock, paper, scissors, lizard, spock, ...) and multiplayer "rock, paper, scissors" game.
+- to get the winner/winners of multi-action (rock, paper, scissors, lizard, spock, ...) and multiplayer "rock, paper, scissors" game.
 
-- there are n actions and m players where n,m are natural numbers and n >= 3 and m >= 2
+- there are m players and n actions where n,m are natural numbers and n >= 3 and m >= 2
 
   - m and n should be odd numbers?
 
@@ -26,6 +26,18 @@
 - Paper disproves Spock
 - Spock vaporizes Rock
 - Rock crushes Scissors
+
+### Game of size 7
+
+- https://www.umop.com/rps7.htm
+
+- ROCK POUNDS OUT FIRE, CRUSHES SCISSORS & SPONGE.
+- FIRE MELTS SCISSORS, BURNS PAPER & SPONGE.
+- SCISSORS SWISH THROUGH AIR, CUT PAPER & SPONGE.
+- SPONGE SOAKS PAPER, USES AIR POCKETS, ABSORBS WATER.
+- PAPER FANS AIR, COVERS ROCK, FLOATS ON WATER.
+- AIR BLOWS OUT FIRE, ERODES ROCK, EVAPORATES WATER.
+- WATER ERODES ROCK, PUTS OUT FIRE, RUSTS SCISSORS.
 
 ### Example Payoff - 3 actions and 3 players
 
@@ -59,9 +71,42 @@
 | 26     | S S P     | ( 1, 1, -2) Both S's beat P      |
 | 27     | S S S     | ( 0, 0, 0) All same              |
 
+### Example Payoff - 5 actions and 5 players
+
+| Row  | P1 P2 P3 P4 P5 | Payoff (P1,P2,P3,P4,P5) | Description              |
+| ---- | -------------- | ----------------------- | ------------------------ |
+| 1    | 0 0 0 0 0      | ( 0, 0, 0, 0, 0)        | All same - tie           |
+| 2    | 0 0 0 0 1      | ( 3, 3, 3, 3,-4)        | 1 beats all 0s           |
+| 3    | 0 0 0 0 2      | ( 3, 3, 3, 3,-4)        | 2 beats all 0s           |
+| 4    | 0 0 0 0 3      | (-3,-3,-3,-3, 4)        | 3 loses to all 0s        |
+| 5    | 0 0 0 0 4      | (-3,-3,-3,-3, 4)        | 4 loses to all 0s        |
+| ...  | ...            | ...                     |
+| 31   | 0 0 0 1 1      | ( 2, 2, 2,-3,-3)        | 0s beat 1s (3v2)         |
+| 32   | 0 0 0 1 2      | ( 1, 1, 1,-1,-2)        | Mixed results            |
+| 33   | 0 0 0 1 3      | ( 0, 0, 0,-2, 2)        | 0→1,2; 3→0; complex      |
+| 34   | 0 0 0 1 4      | (-1,-1,-1, 0, 3)        | 4→0,1 dominates          |
+| ...  | ...            | ...                     |
+| 156  | 0 0 1 1 1      | ( 1, 1,-2,-2,-2)        | 0s beat 1s (2v3)         |
+| 157  | 0 0 1 1 2      | ( 0, 0,-1,-1, 2)        | Complex cycle            |
+| 158  | 0 0 1 1 3      | (-1,-1,-2, 0, 4)        | 3 beats most             |
+| ...  | ...            | ...                     |
+| 781  | 0 1 2 3 4      | ( 0, 0, 0, 0, 0)        | Perfect cycle - all tie! |
+| ...  | ...            | ...                     |
+| 1563 | 1 1 1 1 1      | ( 0, 0, 0, 0, 0)        | All same - tie           |
+| ...  | ..             | ...                     |
+| 2401 | 3 0 2 4 1      | (-2, 2,-2, 2,-2)        | Alternating wins         |
+| 2402 | 3 0 3 1 2      | (-1, 1, 0,-1, 1)        | Near balance             |
+| ...  | ...            | ...                     |
+| 3124 | 4 4 4 4 3      | ( 4, 4, 4, 4,-4)        | 4s beat 3                |
+| 3125 | 4 4 4 4 4      | ( 0, 0, 0, 0, 0)        | All same - tie           |
+
 ---
 
 See also:
+
+- https://www.umop.com/rps.htm
+
+- https://www.samkass.com/theories/RPSSL.html
 
 - [ROCK, PAPER, SCISSORS, ETC - TOPICS IN THE THEORY OF REGULAR TOURNAMENTS by ETHAN AKIN](https://arxiv.org/pdf/1806.11241)
 
