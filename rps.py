@@ -83,7 +83,6 @@ class Game:
             2: [0] # scissors beats rock
         }
 
-
         note: this does not generate beats for rock paper scissors with more actions like rock-paper-scissors-lizard-spock
         it creates a beats dictionary for a valid n-element cyclic game, which is simpler to generalize
         """
@@ -103,39 +102,6 @@ class Game:
     def generate_fixed_beats(self):
         pass
 
-    # def payoff(self):
-    #     """
-    #     for checking who wins
-    #
-    #     Player 0 scored +1 → they beat one other player and lost to none.
-    #     Player 1 scored -1 → they lost to someone and beat no one.
-    #     Player 2 scored 0 → they had a tie or an even outcome.
-    #
-    #     returns zero-sum game
-    #     """
-    #     num_players = len(self._players)
-    #     scores = [0] * num_players
-    #
-    #     # profiles = list(self._players.action)
-    #
-    #     beats = self._beats
-    #     profiles = [player.action for player in self._players]
-    #
-    #     # TODO: double loop
-    #     for i in range(num_players):
-    #         for j in range(num_players):
-    #             if i == j:
-    #                 continue
-    #             a = profiles[i]
-    #             b = profiles[j]
-    #             if b in beats[a]:
-    #                 scores[i] += 1  # i beats j
-    #             elif a in beats[b]:
-    #                 scores[i] -= 1  # i loses to j
-    #             else:
-    #                 pass  # tie, 0 points
-    #
-    #     return tuple(scores)
 
     def check_player_action(self):
         valid_players = []
