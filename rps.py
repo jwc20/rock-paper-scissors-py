@@ -44,7 +44,7 @@ class Game:
             raise ValueError(f"Action count must be odd")
         if action_count < 0:
             raise ValueError(f"Action count must be greater than or equal to 3")
-        
+
         # TODO: custom games
         # if action_count == 3: => classic rock-paper-scissors
         # if action_count == 5: => RPS-5 (rock-paper-scissors-lizard-spock) https://www.samkass.com/theories/RPSSL.html
@@ -54,7 +54,7 @@ class Game:
         # if action_count == 13: => RPS-13 (https://www.umop.com/rps13.htm)
         # if action_count == 15: => RPS-15 (https://www.umop.com/rps15.htm)
         # if action_count == 25: => RPS-25 (https://www.umop.com/rps25.htm)
-        
+
         if not players or len(players) < 2:
             raise ValueError(f"Must have at least two players")
 
@@ -67,7 +67,7 @@ class Game:
     @property
     def beats(self):
         return self._beats
-    
+
     @property
     def players(self):
         return self._players
@@ -75,17 +75,17 @@ class Game:
     def generate_beats(self):
         """
         for creating which actions beat others
-        
+
         example for 3 actions (classic rock-paper-scissors):
         {
             0: [1], # rock beats paper
             1: [2], # paper beats scissors
             2: [0] # scissors beats rock
         }
-        
+
 
         note: this does not generate beats for rock paper scissors with more actions like rock-paper-scissors-lizard-spock
-        it creates a beats dictionary for a valid n-element cyclic game, which is simpler to generalize 
+        it creates a beats dictionary for a valid n-element cyclic game, which is simpler to generalize
         """
         beats = {}
         half = (self._action_count - 1) // 2  # number of actions each one beats
@@ -96,33 +96,31 @@ class Game:
                 beat_list.append(beat_index)
             beats[i] = beat_list
         self._beats = beats
-    
-    
-    # TODO: generate hardcoded beats 
-    #  for classic rock-paper-scissors, classic rock-paper-scissors-lizard-spock, and etc 
+
+    # TODO: generate hardcoded beats
+    #  for classic rock-paper-scissors, classic rock-paper-scissors-lizard-spock, and etc
     # https://www.umop.com/rps.htm
     def generate_fixed_beats(self):
         pass
-        
 
     # def payoff(self):
     #     """
     #     for checking who wins
-    # 
+    #
     #     Player 0 scored +1 → they beat one other player and lost to none.
     #     Player 1 scored -1 → they lost to someone and beat no one.
     #     Player 2 scored 0 → they had a tie or an even outcome.
-    # 
+    #
     #     returns zero-sum game
     #     """
     #     num_players = len(self._players)
     #     scores = [0] * num_players
-    # 
+    #
     #     # profiles = list(self._players.action)
-    # 
+    #
     #     beats = self._beats
     #     profiles = [player.action for player in self._players]
-    # 
+    #
     #     # TODO: double loop
     #     for i in range(num_players):
     #         for j in range(num_players):
@@ -136,7 +134,7 @@ class Game:
     #                 scores[i] -= 1  # i loses to j
     #             else:
     #                 pass  # tie, 0 points
-    # 
+    #
     #     return tuple(scores)
 
     def check_player_action(self):
@@ -159,7 +157,7 @@ class Game:
             - number of actions
         """
         pass
-    
+
     # TODO
     def eliminate_losers(self):
         """
@@ -167,7 +165,6 @@ class Game:
         """
         scores = self.payoff()
         pass
-
 
     def eliminate(self):
         n = len(self._players)
@@ -190,11 +187,9 @@ class Game:
             return []
 
         return eliminated
-        
-    
+
     def play_round(self):
         pass
-
 
 
 class Tournament(Game):
@@ -212,11 +207,6 @@ class Tournament(Game):
         pass
 
 
-
-
-
-
-
 if __name__ == "__main__":
     # test beats
     # for i in range(3, 10, 2):
@@ -232,16 +222,15 @@ if __name__ == "__main__":
         # RandomActionPlayer("cave"),
     ]
 
-    # 
+    #
     game_3 = Game(ps, 5)
     # beats =game_3.beats
     # print(game_3.beats)
     # print(game_3.payoff())
-    
+
     print(game_3.beats)
-    
+
     # get players names and actions
     print([(p._name, p.action) for p in game_3.players])
 
     print(game_3.eliminate())
-    
