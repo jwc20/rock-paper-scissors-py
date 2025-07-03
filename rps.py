@@ -1,21 +1,8 @@
 from typing import List
 from itertools import product
 import random
-from pprintpp import pprint as pp
 
-
-class Player:
-    def __init__(self, name: str, action: int) -> None:
-        self._name = name
-        self._action = action
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def action(self):
-        return self._action
+from abc import ABC, abstractmethod
 
 
 class GameState:
@@ -24,6 +11,37 @@ class GameState:
         self.history = []
         self.winner = None
         self.is_finished = False
+
+
+class Player(ABC):
+    def __init__(self, name: str) -> None:
+        self._name = name
+        self._score = 0
+        self._history = []
+        # self._action = action
+
+    # @property
+    # def name(self):
+    #     return self._name
+    # 
+    # @property
+    # def action(self):
+    #     return self._action
+    @abstractmethod
+    def choose_action(self, action):
+        pass
+
+class FixedActionPlayer(Player):
+    def __init__(self, name, action):
+        super().__init__(name)
+        self.action = action
+    
+    def choose_action(self, game_state: GameState, action):
+        return self.action
+
+class RandomActionPlayer(Player):
+    def choose_action(self, action_count):
+        return random.randrange(0, action_count)
 
 
 class Game:
