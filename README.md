@@ -110,6 +110,10 @@ See also:
 
 - [ROCK, PAPER, SCISSORS, ETC - TOPICS IN THE THEORY OF REGULAR TOURNAMENTS by ETHAN AKIN](https://arxiv.org/pdf/1806.11241)
 
+- https://www.cs.umd.edu/~hajiagha/474GT13/Lecture09102013.pdf
+
+- https://leetcode.com/problems/count-the-number-of-winning-sequences/description/
+
 Normal-form Matrix:
 
 - https://youtu.be/-1GDMXoMdaY?si=01Bx5GFGrJhCi-dX
