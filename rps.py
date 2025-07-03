@@ -23,13 +23,15 @@ class Player(ABC):
     def choose_action(self, game_state: GameState, action_count):
         pass
 
+
 class FixedActionPlayer(Player):
     def __init__(self, name, action):
         super().__init__(name)
         self.action = action
-    
+
     def choose_action(self, game_state: GameState, action_count):
         return self.action
+
 
 class RandomActionPlayer(Player):
     def choose_action(self, game_state: GameState, action_count):
@@ -44,7 +46,7 @@ class Game:
             raise ValueError(f"Action count must be greater than or equal to 3")
         if not players or len(players) < 2:
             raise ValueError(f"Must have at least two players")
-        
+
         self._players = players
         self._action_count = action_count  # TODO: must be an odd number
         self._beats = {}
@@ -116,26 +118,37 @@ class Game:
         pass
 
     # TODO
-    def generate_permutation(self):
+    def generate_combinations(self):
+        """
+        generate all possible combination of actions based on
+            - number of players
+            - number of actions
+        """
         pass
-
-
+    
+    # TODO
+    def eliminate_losers(self, scores):
+        """payoff() -> eliminate_losers(scores)"""
+        pass
+        
+    
+    def play_round(self):
+        pass
 
 
 class Tournament(Game):
     """
     play the game until there is a clear winner
     """
+
     def __init__(self, players: List[Player], action_count: int) -> None:
         super().__init__(players, action_count)
-
 
     # TODO
     def play(self):
         # while True:
         #     pass
         pass
-
 
 
 if __name__ == "__main__":
@@ -145,14 +158,14 @@ if __name__ == "__main__":
     #     current_game = Game([], i)
     #     print(f"game_{i} {current_game.beats}")
 
-    p1 = Player("jon", 1)
-    p2 = Player("don", 2)
-    p3 = Player("dave", 1)
-    p4 = Player("dave2", 6)
-    p5 = Player("dave3", -1)
-    p6 = Player("dave4", 2)
+    ps = [
+        FixedActionPlayer("jon", 1),
+        FixedActionPlayer("don", 2),
+        FixedActionPlayer("dave", 1),
+        FixedActionPlayer("dave2", 6),
+        RandomActionPlayer("cave"),
+    ]
 
-    ps = [p1, p2, p3, p4, p5, p6]
 
     game_3 = Game(ps, 3)
     # print(game_3.beats)
