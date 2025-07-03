@@ -18,17 +18,9 @@ class Player(ABC):
         self._name = name
         self._score = 0
         self._history = []
-        # self._action = action
 
-    # @property
-    # def name(self):
-    #     return self._name
-    # 
-    # @property
-    # def action(self):
-    #     return self._action
     @abstractmethod
-    def choose_action(self, action):
+    def choose_action(self, game_state: GameState, action_count):
         pass
 
 class FixedActionPlayer(Player):
@@ -36,11 +28,11 @@ class FixedActionPlayer(Player):
         super().__init__(name)
         self.action = action
     
-    def choose_action(self, game_state: GameState, action):
+    def choose_action(self, game_state: GameState, action_count):
         return self.action
 
 class RandomActionPlayer(Player):
-    def choose_action(self, action_count):
+    def choose_action(self, game_state: GameState, action_count):
         return random.randrange(0, action_count)
 
 
