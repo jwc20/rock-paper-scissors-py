@@ -1,6 +1,6 @@
 # rock-paper-scissors-py
 
-Get the winner of multi-player(more than two players) and multi-action(rock, paper, scissors, lizard, spock) RPS game.
+Multi-player and multi-action Rock, Paper, Scissors game client.
 
 ## Installation
 
@@ -64,15 +64,27 @@ game = rps.Game(random_players, action_three)
 game.play()
 ```
 
+### Example
+
+Run the `example.py` in the root directory
+
+```bash
+python example.py
+
+# or
+
+uv run example.py
+```
+
 ---
 
 ## Note
 
-Game consists of m players and n actions where m >= 2 and n >= 3 and n is an odd number.
+Game consists of `m` players and `n` actions where `m >= 2` and `n >= 3` and `n` is an odd number.
 
 Actions are hand gestures played by the players (rock, paper, scissors).
 
-If the number of actions set in the game is between 3 and 15, the game uses the rules made by [Sam Kass](https://www.samkass.com/theories/RPSSL.html) and [David C. Lovelace](https://www.umop.com/rps.htm).
+If the number of actions set in the game is between 5 and 15, the game uses the rules made by [Sam Kass](https://www.samkass.com/theories/RPSSL.html) and [David C. Lovelace](https://www.umop.com/rps.htm).
 
 ---
 
