@@ -8,6 +8,6 @@ __all__ = [
     "RandomActionPlayer",
 ]
 
-__version__ = "1.0.0"
+__version__ = "0.1.0"
 __authors__ = ["jwc20"]
 __source__ = "https://github.com/jwc20/rock-paper-scissors-py"
