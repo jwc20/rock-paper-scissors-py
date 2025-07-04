@@ -60,14 +60,17 @@ class Game:
     def check_player_action(self):
         valid_players = []
         for player in self._players:
-            if 0 <= player.action < self._action_count:
-                valid_players.append(player)
-        # print("removed", [(p.name, p.action) for p in self._players if p not in valid_players])
+            # Only check action for FixedActionPlayer
+            if hasattr(player, 'action') and player.action is not None:
+                if 0 <= player.action < self._action_count:
+                    valid_players.append(player)
+            else:
+                valid_players.append(player)  # Keep players that don't have action attribute
         self._players = valid_players
 
-    def eliminate(self):
+    def eliminate(self, actions):
         n = len(self._players)
-        actions = [player.action for player in self._players]
+        # actions = [player.action for player in self._players]
         beats = self._beats
         eliminated = []
 
@@ -87,6 +90,23 @@ class Game:
 
         return eliminated
 
+    def _get_winner(self, actions):
+        eliminated = self.eliminate(actions)
+        winners = []
+
+        for i in range(len(self._players)):
+            if i in eliminated:
+                continue
+            winners.append(self._players[i])
+        return winners
+
+    def play_round(self):
+        actions = [player.choose_action(self._action_count) for player in self._players]
+        
+        self._players = self._get_winner(actions)
+        print([(p.name, p.action) for p in self._players])
+        return self._players
+
     # TODO
     def generate_combinations(self):
         """
@@ -99,18 +119,3 @@ class Game:
     # TODO
     def generate_permutations(self):
         pass
-
-    def _get_winner(self):
-        eliminated = self.eliminate()
-        winners = []
-
-        for i in range(len(self._players)):
-            if i in eliminated:
-                continue
-            winners.append(self._players[i])
-        return winners
-
-    def play_round(self):
-        self._players = self._get_winner()
-        print([(p.name, p.action) for p in self._players])
-        return self._players

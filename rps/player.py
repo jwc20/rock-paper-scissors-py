@@ -9,7 +9,7 @@ class Player(ABC):
         self._history = []
 
     @abstractmethod
-    def choose_action(self, game_state: GameState, action_count):
+    def choose_action(self, action_count):
         pass
 
 
@@ -18,11 +18,15 @@ class FixedActionPlayer(Player):
         super().__init__(name)
         self.action = action
 
-    def choose_action(self, game_state: GameState, action_count):
+    def choose_action(self, action_count):
         return self.action
 
 
 class RandomActionPlayer(Player):
-    def choose_action(self, game_state: GameState, action_count):
-        return random.randrange(0, action_count)
+    def __init__(self, name: str):
+        super().__init__(name)
+        self.action = None
 
+    def choose_action(self, action_count: int) -> int:
+        self.action = random.randrange(0, action_count)
+        return self.action
