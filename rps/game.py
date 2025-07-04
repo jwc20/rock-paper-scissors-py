@@ -87,13 +87,14 @@ class Game:
         # if it's a tie (everybody is eliminated)
         if len(eliminated) == len(actions):
             return []
-
+        
         return eliminated
 
     def _get_winner(self, actions):
-        print(f"name: {[(p.name, p.action) for p in self._players]}")
+        # print(f"name: {[(p.name, p.action) for p in self._players]}")
         eliminated = self.eliminate(actions)
-        print(f"eliminated: {eliminated}")
+        if len(eliminated) > 0:
+            print(f"eliminated: {eliminated}")
         winners = []
 
         for i in range(len(self._players)):
@@ -104,20 +105,17 @@ class Game:
 
     def play_round(self):
         actions = [player.choose_action(self._action_count) for player in self._players]
-        
+        print("current players: ", [(p.name, p.action) for p in self._players])
         self._players = self._get_winner(actions)
-        print([(p.name, p.action) for p in self._players])
+        
         return self._players
-
-    # TODO
-    def generate_combinations(self):
-        """
-        generate all possible combination of actions based on
-            - number of players
-            - number of actions
-        """
-        pass
-
-    # TODO
-    def generate_permutations(self):
-        pass
+    
+    def play(self):
+        round = 1
+        while len(self._players) > 1:
+            print(f"Round {round}")
+            self.play_round()
+            round += 1
+            print(" ")
+        
+        return f"winner is {self._players[0].name}"
