@@ -22,6 +22,15 @@ def main():
     
     print("\nEliminated players:")
     print(game.eliminate())
+    
+    
+    print(Game(players, 3).beats)
+    print(Game(players, 5).beats)
+    print(Game(players, 7).beats)
+    print(Game(players, 9).beats)
+    print(Game(players, 11).beats)
+    print(Game(players, 13).beats)
+    print(Game(players, 15).beats)
 
 
 if __name__ == "__main__":

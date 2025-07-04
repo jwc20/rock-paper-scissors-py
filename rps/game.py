@@ -2,6 +2,9 @@ from typing import List
 from .game_state import GameState
 from .player import Player
 
+from .utils import GameOfSize
+
+
 class Game:
     def __init__(self, players: List[Player], action_count: int) -> None:
         if action_count % 2 == 0:
@@ -9,24 +12,19 @@ class Game:
         if action_count < 0:
             raise ValueError(f"Action count must be greater than or equal to 3")
 
-        # TODO: custom games
-        # if action_count == 3: => classic rock-paper-scissors
-        # if action_count == 5: => RPS-5 (rock-paper-scissors-lizard-spock) https://www.samkass.com/theories/RPSSL.html
-        # if action_count == 7: => RPS-7 (rock-paper-scissors-fire-water-air-sponge) https://www.umop.com/rps7.htm
-        # if action_count == 9: => RPS-9 (https://www.umop.com/rps9.htm)
-        # if action_count == 11: => RPS-11 (https://www.umop.com/rps11.htm)
-        # if action_count == 13: => RPS-13 (https://www.umop.com/rps13.htm)
-        # if action_count == 15: => RPS-15 (https://www.umop.com/rps15.htm)
-        # if action_count == 25: => RPS-25 (https://www.umop.com/rps25.htm)
-
         if not players or len(players) < 2:
             raise ValueError(f"Must have at least two players")
 
         self._players = players
         self._action_count = action_count  # TODO: must be an odd number
         self._beats = {}
+
+        if 3 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
+            self._beats = GameOfSize(action_count).BEATS
+        else:
+            self.generate_beats()
+
         self.check_player_action()
-        self.generate_beats()
 
     @property
     def beats(self):
@@ -65,7 +63,6 @@ class Game:
     # https://www.umop.com/rps.htm
     def generate_fixed_beats(self):
         pass
-
 
     def check_player_action(self):
         valid_players = []
