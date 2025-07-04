@@ -7,6 +7,10 @@ Multi-player and multi-action Rock, Paper, Scissors game client.
 To install, run the following commands:
 
 ```bash
+pip install rock-paper-scissors-py
+
+# or
+
 git@github.com:jwc20/rock-paper-scissors-py.git
 cd rock-paper-scissors-py
 ```
