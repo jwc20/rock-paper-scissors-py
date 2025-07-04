@@ -8,9 +8,7 @@ from enum import Enum
 class GameOfSize:
     def __init__(self, size):
         self.size = size
-        if size == 3:
-            self.BEATS = GameOfSizeThree.BEATS.value
-        elif size == 5:
+        if size == 5:
             self.BEATS = GameOfSizeFive.BEATS.value
         elif size == 7:
             self.BEATS = GameOfSizeSeven.BEATS.value
@@ -20,14 +18,6 @@ class GameOfSize:
             self.BEATS = GameOfSizeEleven.BEATS.value
         elif size == 15:
             self.BEATS = GameOfSizeFifteen.BEATS.value
-
-
-class GameOfSizeThree(Enum):
-    BEATS = {
-        0: [2],  # Rock beats Scissors
-        1: [0],  # Paper beats Rock
-        2: [1],  # Scissors beat Paper
-    }
 
 
 class GameOfSizeFive(Enum):

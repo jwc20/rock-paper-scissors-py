@@ -1,7 +1,5 @@
 from typing import List
-from .game_state import GameState
 from .player import Player
-
 from .utils import GameOfSize
 
 
@@ -16,10 +14,11 @@ class Game:
             raise ValueError(f"Must have at least two players")
 
         self._players = players
-        self._action_count = action_count  # TODO: must be an odd number
+        self._action_count = action_count
         self._beats = {}
 
-        if 3 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
+        # set beats/game rules
+        if 5 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
             self._beats = GameOfSize(action_count).BEATS
         else:
             self.generate_beats()
@@ -58,12 +57,6 @@ class Game:
             beats[i] = beat_list
         self._beats = beats
 
-    # TODO: generate hardcoded beats
-    #  for classic rock-paper-scissors, classic rock-paper-scissors-lizard-spock, and etc
-    # https://www.umop.com/rps.htm
-    def generate_fixed_beats(self):
-        pass
-
     def check_player_action(self):
         valid_players = []
         for player in self._players:
@@ -71,27 +64,6 @@ class Game:
                 valid_players.append(player)
         # print("removed", [(p.name, p.action) for p in self._players if p not in valid_players])
         self._players = valid_players
-
-    # TODO
-    def check_win(self):
-        pass
-
-    # TODO
-    def generate_combinations(self):
-        """
-        generate all possible combination of actions based on
-            - number of players
-            - number of actions
-        """
-        pass
-
-    # TODO
-    def eliminate_losers(self):
-        """
-        payoff() gets scores -> eliminate_losers(scores)
-        """
-        scores = self.payoff()
-        pass
 
     def eliminate(self):
         n = len(self._players)
@@ -116,4 +88,13 @@ class Game:
         return eliminated
 
     def play_round(self):
+        pass
+
+    # TODO
+    def generate_combinations(self):
+        """
+        generate all possible combination of actions based on
+            - number of players
+            - number of actions
+        """
         pass
