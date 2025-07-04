@@ -1,60 +1,83 @@
 # rock-paper-scissors-py
 
-## motivation
+Get the winner of multi-player(more than two players) and multi-action(rock, paper, scissors, lizard, spock) RPS game.
 
-- to get the winner/winners of multi-action (rock, paper, scissors, lizard, spock, ...) and multiplayer "rock, paper, scissors" game.
+## Installation
 
-- there are m players and n actions where n,m are natural numbers and n >= 3 and m >= 2
+To install, run the following commands:
 
-  - m and n should be odd numbers?
+```bash
+git@github.com:jwc20/rock-paper-scissors-py.git
+cd rock-paper-scissors-py
+```
 
-### Game of size 3 - classic
+To use the engine, first setup and activate a python virtual environment (venv)
 
-- Rock wins against scissors.
-- Scissors win against paper.
-- Paper wins against rock.
+```bash
+python3 -m venv venv
+. ./venv/bin/activate
 
-### Game of size 5 - Rock-Paper-Scissors-Lizard-Spock
+# or use astral/uv
+uv venv --python 3.13
+. ./venv/bin/activate
+```
 
-- Scissors cuts Paper
-- Paper covers Rock
-- Rock crushes Lizard
-- Lizard poisons Spock
-- Spock smashes Scissors
-- Scissors decapitates Lizard
-- Lizard eats Paper
-- Paper disproves Spock
-- Spock vaporizes Rock
-- Rock crushes Scissors
+Install from requirements.txt
 
-### Game of size 7
+```bash
+pip3 install -r requirements.txt
 
-- https://www.umop.com/rps7.htm
+# or
+uv add -r requirements.txt
+```
 
-- ROCK POUNDS OUT FIRE, CRUSHES SCISSORS & SPONGE.
-- FIRE MELTS SCISSORS, BURNS PAPER & SPONGE.
-- SCISSORS SWISH THROUGH AIR, CUT PAPER & SPONGE.
-- SPONGE SOAKS PAPER, USES AIR POCKETS, ABSORBS WATER.
-- PAPER FANS AIR, COVERS ROCK, FLOATS ON WATER.
-- AIR BLOWS OUT FIRE, ERODES ROCK, EVAPORATES WATER.
-- WATER ERODES ROCK, PUTS OUT FIRE, RUSTS SCISSORS.
+## Usage:
+
+To import, type
+
+```python
+import rps
+```
+
+Set the number of actions allowed in the game
+
+```python
+action_three = 3 # rock, paper, scissors
+action_five = 5 # rock, paper, scissors, Spock, lizard
+```
+
+Set the players with either fixed or random actions
+
+```python
+player_jae = rps.FixedActionPlayer("Jae", 0) # always plays Rock, like an idiot
+
+# bunch of random players with random actions
+random_player_names = [f"random{i}" for i in range(20)]
+random_players = [RandomActionPlayer(name) for name in random_player_names]
+```
+
+Set the game and play
+
+```python
+game = rps.Game(random_players, action_three)
+
+game.play()
+```
 
 ---
 
-See also:
+## Note
+
+Game consists of m players and n actions where m >= 2 and n >= 3 and n is an odd number.
+
+Actions are hand gestures played by the players (rock, paper, scissors).
+
+If the number of actions set in the game is between 3 and 15, the game uses the rules made by [Sam Kass](https://www.samkass.com/theories/RPSSL.html) and [David C. Lovelace](https://www.umop.com/rps.htm).
+
+---
+
+## See also:
 
 - https://www.umop.com/rps.htm
 
 - https://www.samkass.com/theories/RPSSL.html
-
-- [ROCK, PAPER, SCISSORS, ETC - TOPICS IN THE THEORY OF REGULAR TOURNAMENTS by ETHAN AKIN](https://arxiv.org/pdf/1806.11241)
-
-- https://www.cs.umd.edu/~hajiagha/474GT13/Lecture09102013.pdf
-
-- https://leetcode.com/problems/count-the-number-of-winning-sequences/description/
-
-Normal-form Matrix:
-
-- https://youtu.be/-1GDMXoMdaY?si=01Bx5GFGrJhCi-dX
-
-- https://www.researchgate.net/publication/10810903_Dressing_the_mind_properly_for_the_game

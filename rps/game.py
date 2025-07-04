@@ -118,4 +118,5 @@ class Game:
             round += 1
             print(" ")
 
-        return f"winner is {self._players[0].name}"
+        print(f"Winner is {self._players[0].name}")
+        return self._players[0].name
