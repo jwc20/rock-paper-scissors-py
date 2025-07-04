@@ -91,7 +91,9 @@ class Game:
         return eliminated
 
     def _get_winner(self, actions):
+        print(f"name: {[(p.name, p.action) for p in self._players]}")
         eliminated = self.eliminate(actions)
+        print(f"eliminated: {eliminated}")
         winners = []
 
         for i in range(len(self._players)):
