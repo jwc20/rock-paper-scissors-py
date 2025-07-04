@@ -1,6 +1,6 @@
 import random
 from abc import ABC, abstractmethod
-from .game_state import GameState
+
 
 class Player(ABC):
     def __init__(self, name: str) -> None:
