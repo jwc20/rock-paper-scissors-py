@@ -3,28 +3,26 @@ from abc import ABC, abstractmethod
 
 
 class Player(ABC):
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, action=None) -> None:
         self.name = name
-        self.action = None
-        self._score = 0
-        self._history = []
+        self.action = action
 
     @abstractmethod
-    def choose_action(self, action_count):
+    def choose_action(self, action_count: int) -> int:
         pass
 
 
 class FixedActionPlayer(Player):
-    def __init__(self, name, action):
+    def __init__(self, name: str, action: int) -> None:
         super().__init__(name)
         self.action = action
 
-    def choose_action(self, action_count):
+    def choose_action(self, action_count: int) -> int:
         return self.action
 
 
 class RandomActionPlayer(Player):
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         super().__init__(name)
         self.action = None
 

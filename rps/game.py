@@ -4,7 +4,7 @@ from .utils import GameOfSize
 
 
 class Game:
-    def __init__(self, players: List[Player], action_count: int) -> None:
+    def __init__(self, players, action_count: int) -> None:
         if action_count % 2 == 0:
             raise ValueError(f"Action count must be odd")
         if action_count < 0:
@@ -35,19 +35,7 @@ class Game:
         return self._players
 
     def generate_beats(self):
-        """
-        for creating which actions beat others
-
-        example for 3 actions (classic rock-paper-scissors):
-        {
-            0: [1], # rock beats paper
-            1: [2], # paper beats scissors
-            2: [0] # scissors beats rock
-        }
-
-        note: this does not generate beats for rock paper scissors with more actions like rock-paper-scissors-lizard-spock
-        it creates a beats dictionary for a valid n-element cyclic game, which is simpler to generalize
-        """
+        """generate beats dictionary for games with action size 17 or greater"""
         beats = {}
         half = (self._action_count - 1) // 2  # number of actions each one beats
         for i in range(self._action_count):
@@ -62,17 +50,21 @@ class Game:
         valid_players = []
         for player in self._players:
             # Only check action for FixedActionPlayer
-            if hasattr(player, 'action') and player.action is not None:
+            if hasattr(player, "action") and player.action is not None:
                 if 0 <= player.action < self._action_count:
                     valid_players.append(player)
             else:
-                valid_players.append(player)  # Keep players that don't have action attribute
+                valid_players.append(
+                    player
+                )  # Keep players that don't have action attribute
         self._players = valid_players
 
-    def eliminate(self, actions):
+    def eliminate(self, actions: List[int]) -> List[int]:
+        """get the list of players that should be eliminated"""
         n = len(self._players)
         beats = self._beats
         eliminated = []
+        result = []
 
         for i in range(n):
             my_action = actions[i]
@@ -88,13 +80,21 @@ class Game:
         if len(eliminated) == len(actions):
             return []
 
+        for n in eliminated:
+            for i, p in enumerate(self._players):
+                if i == n:
+                    result.append(p)
+
+        print(
+            "eliminated players: ",
+            [(p.name, p.action) for p in result],
+        )
+
         return eliminated
 
-    def _get_winner(self, actions):
+    def _get_winner(self, actions: List[int]) -> List[Player]:
         # print(f"name: {[(p.name, p.action) for p in self._players]}")
         eliminated = self.eliminate(actions)
-        if len(eliminated) > 0:
-            print(f"eliminated: {eliminated}")
         winners = []
 
         for i in range(len(self._players)):
@@ -105,7 +105,10 @@ class Game:
 
     def play_round(self):
         actions = [player.choose_action(self._action_count) for player in self._players]
-        print("current players: ", [(p.name, p.action) for p in self._players])
+        print(
+            "current players: ",
+            [(p.name, p.action) for p in self._players],
+        )
         self._players = self._get_winner(actions)
 
         return self._players
