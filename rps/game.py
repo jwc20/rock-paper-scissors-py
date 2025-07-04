@@ -87,9 +87,6 @@ class Game:
 
         return eliminated
 
-    def play_round(self):
-        pass
-
     # TODO
     def generate_combinations(self):
         """
@@ -98,3 +95,22 @@ class Game:
             - number of actions
         """
         pass
+
+    # TODO
+    def generate_permutations(self):
+        pass
+
+    def _get_winner(self):
+        eliminated = self.eliminate()
+        winners = []
+
+        for i in range(len(self._players)):
+            if i in eliminated:
+                continue
+            winners.append(self._players[i])
+        return winners
+
+    def play_round(self):
+        self._players = self._get_winner()
+        print([(p.name, p.action) for p in self._players])
+        return self._players
