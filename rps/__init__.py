@@ -1,7 +1,6 @@
 from .game import Game
 from .player import Player, FixedActionPlayer, RandomActionPlayer
 
-
 __all__ = [
     "Game",
     "Player",

@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 class Player(ABC):
     def __init__(self, name: str) -> None:
         self.name = name
+        self.action = None
         self._score = 0
         self._history = []
 

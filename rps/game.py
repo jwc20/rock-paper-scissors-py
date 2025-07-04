@@ -17,10 +17,11 @@ class Game:
         self._action_count = action_count
         self._beats = {}
 
-        # set beats/game rules
+        # set beats/game rules created by https://www.umop.com/rps.htm
         if 5 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
             self._beats = GameOfSize(action_count).BEATS
         else:
+            # if the action count is greater than 15 or is 13, then generate the beats dictionary (symmetric game)
             self.generate_beats()
 
         self.check_player_action()
@@ -70,7 +71,6 @@ class Game:
 
     def eliminate(self, actions):
         n = len(self._players)
-        # actions = [player.action for player in self._players]
         beats = self._beats
         eliminated = []
 
@@ -84,10 +84,10 @@ class Game:
                     eliminated.append(i)
                     break  # Player i is beaten by someone → eliminate
 
-        # if it's a tie (everybody is eliminated)
+        # if it's a tie (all actions are played), no one is eliminated
         if len(eliminated) == len(actions):
             return []
-        
+
         return eliminated
 
     def _get_winner(self, actions):
@@ -107,9 +107,9 @@ class Game:
         actions = [player.choose_action(self._action_count) for player in self._players]
         print("current players: ", [(p.name, p.action) for p in self._players])
         self._players = self._get_winner(actions)
-        
+
         return self._players
-    
+
     def play(self):
         round = 1
         while len(self._players) > 1:
@@ -117,5 +117,5 @@ class Game:
             self.play_round()
             round += 1
             print(" ")
-        
+
         return f"winner is {self._players[0].name}"
