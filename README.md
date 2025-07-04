@@ -14,12 +14,13 @@ cd rock-paper-scissors-py
 To use the engine, first setup and activate a python virtual environment (venv)
 
 ```bash
-python3 -m venv venv
-. ./venv/bin/activate
+python3 -m venv .venv
 
 # or use astral/uv
 uv venv --python 3.13
-. ./venv/bin/activate
+
+
+. ./.venv/bin/activate
 ```
 
 Install from requirements.txt
