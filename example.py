@@ -11,4 +11,8 @@ if __name__ == "__main__":
 
     print("starting: ", [(p.name, p.action) for p in all_players])
     random_game = Game(all_players, game_action_size)
+
+    random_game_beats = random_game.beats
+    print("game rule: ", random_game_beats)
+
     random_game.play()

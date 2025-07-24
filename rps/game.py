@@ -18,7 +18,7 @@ class Game:
         self._beats = {}
 
         # set beats/game rules created by https://www.umop.com/rps.htm
-        if 5 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
+        if 3 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
             self._beats = GameOfSize(action_count).BEATS
         else:
             # if the action count is greater than 15 or is 13, then generate the beats dictionary (symmetric game)
