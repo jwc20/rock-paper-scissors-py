@@ -17,11 +17,11 @@ if __name__ == "__main__":
 
     print(" ")
     print("starting: ", [(p.name, get_player_action_info(p)) for p in all_players])
-    random_game = Game(all_players, game_action_size)
+    example_game = Game(all_players, game_action_size)
 
     print(" ")
-    random_game_beats = random_game.beats
+    random_game_beats = example_game.beats
     print("game rule: ", random_game_beats)
     print(" ")
 
-    random_game.play()
+    example_game.play()
