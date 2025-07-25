@@ -2,6 +2,10 @@ import random
 from abc import ABC, abstractmethod
 from collections import deque
 
+import logging
+
+log = logging.getLogger(__name__)
+
 
 class Player(ABC):
     def __init__(self, name: str, action=None) -> None:
@@ -39,13 +43,16 @@ class FixedActionPlayer(Player):
     def choose_action(self, action_count: int) -> int:
         if self.action_queue is not None:
             if self.action_queue:
+                log.info(f"{self.name} played: {self.action_queue[0]}")
                 return self.action_queue.popleft()
             elif self.is_cycle and self.original_queue:  # reset
                 self.action_queue = self.original_queue.copy()
+                log.info(f"{self.name} played: {self.action_queue[0]}")
                 return self.action_queue.popleft()
             else:
                 raise ValueError("Action queue is empty")
         else:
+            log.info(f"{self.name} played: {self.action}")
             return self.action
 
 
@@ -57,4 +64,5 @@ class RandomActionPlayer(Player):
 
     def choose_action(self, action_count: int) -> int:
         self.action = random.randrange(0, action_count)
+        log.info(f"{self.name} played: {self.action}")
         return self.action

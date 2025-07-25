@@ -1,6 +1,9 @@
 from rps import Game, FixedActionPlayer, RandomActionPlayer
 from collections import deque
 from rps.utils import get_player_action_info
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
     game_action_size = 3  # classic rock-paper-scissors

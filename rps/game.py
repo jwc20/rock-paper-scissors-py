@@ -91,7 +91,7 @@ class Game:
                 if i == n:
                     result.append(p)
 
-        log.info(f"eliminated players: {[(p.name, p.action) for p in result]}")
+        log.info(f"eliminated players: {[(p.name) for p in result]}")
 
         return eliminated
 
@@ -118,11 +118,12 @@ class Game:
         self._players = self._original_players.copy()
         self.round_num = 0
         self.game_num += 1
+        log.info("game has been reset")
 
     def play(self):
         self.round_num += 1
         while len(self._players) > 1:
-            log.info(f"Round {round}")
+            log.info(f"Round {self.round_num}")
             self.play_round()
             self.round_num += 1
             log.info(" ")
