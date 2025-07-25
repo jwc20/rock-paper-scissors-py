@@ -4,6 +4,17 @@ https://www.umop.com/rps.htm
 
 from enum import Enum
 
+def get_player_action_info(player):
+    if hasattr(player, 'action_queue') and player.action_queue is not None and player.type == "fixed_queue":
+        if player.action_queue:
+            return f"queue: {list(player.action_queue)}"
+        else:
+            return "queue: empty"
+    else:
+        action_str = ""
+        if player.type == "fixed":
+            action_str = f": {player.action}" 
+        return f"{player.type}{action_str}"
 
 class GameOfSize:
     def __init__(self, size):

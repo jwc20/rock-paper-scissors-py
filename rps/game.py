@@ -1,6 +1,6 @@
 from typing import List
 from .player import Player
-from .utils import GameOfSize
+from .utils import GameOfSize, get_player_action_info
 
 
 class Game:
@@ -93,7 +93,6 @@ class Game:
         return eliminated
 
     def _get_winner(self, actions: List[int]) -> List[Player]:
-        # print(f"name: {[(p.name, p.action) for p in self._players]}")
         eliminated = self.eliminate(actions)
         winners = []
 
@@ -107,7 +106,7 @@ class Game:
         actions = [player.choose_action(self._action_count) for player in self._players]
         print(
             "current players: ",
-            [(p.name, p.action) for p in self._players],
+            [(p.name, get_player_action_info(p)) for p in self._players],
         )
         self._players = self._get_winner(actions)
 
