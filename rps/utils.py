@@ -4,11 +4,24 @@ https://www.umop.com/rps.htm
 
 from enum import Enum
 
+def get_player_action_info(player):
+    if hasattr(player, 'action_queue') and player.action_queue is not None and player.type == "fixed_queue":
+        if player.action_queue:
+            return f"queue: {list(player.action_queue)}"
+        else:
+            return "queue: empty"
+    else:
+        action_str = ""
+        if player.type == "fixed":
+            action_str = f": {player.action}" 
+        return f"{player.type}{action_str}"
 
 class GameOfSize:
     def __init__(self, size):
         self.size = size
-        if size == 5:
+        if size == 3:
+            self.BEATS = GameOfSizeThree.BEATS.value
+        elif size == 5:
             self.BEATS = GameOfSizeFive.BEATS.value
         elif size == 7:
             self.BEATS = GameOfSizeSeven.BEATS.value
@@ -19,6 +32,12 @@ class GameOfSize:
         elif size == 15:
             self.BEATS = GameOfSizeFifteen.BEATS.value
 
+class GameOfSizeThree(Enum):
+    BEATS = {
+        0: [2], # Rock beats Scissors
+        1: [0], # Paper beats Rock
+        2: [1], # Scissors beats Paper
+    }
 
 class GameOfSizeFive(Enum):
     BEATS = {
