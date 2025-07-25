@@ -1,6 +1,9 @@
-from typing import List
 from .player import Player
 from .utils import GameOfSize, get_player_action_info
+
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class Game:
@@ -14,8 +17,11 @@ class Game:
             raise ValueError(f"Must have at least two players")
 
         self._players = players
+        self._original_players = players.copy() # for resetting game
         self._action_count = action_count
         self._beats = {}
+        self.round_num = 0
+        self.game_num = 1
 
         # set beats/game rules created by https://www.umop.com/rps.htm
         if 3 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
@@ -59,7 +65,7 @@ class Game:
                 )  # Keep players that don't have action attribute
         self._players = valid_players
 
-    def eliminate(self, actions: List[int]) -> List[int]:
+    def eliminate(self, actions: list[int]) -> list[int]:
         """get the list of players that should be eliminated"""
         n = len(self._players)
         beats = self._beats
@@ -85,14 +91,11 @@ class Game:
                 if i == n:
                     result.append(p)
 
-        print(
-            "eliminated players: ",
-            [(p.name, p.action) for p in result],
-        )
+        log.info(f"eliminated players: {[(p.name, p.action) for p in result]}")
 
         return eliminated
 
-    def _get_winner(self, actions: List[int]) -> List[Player]:
+    def _get_winner(self, actions: list[int]) -> list[Player]:
         eliminated = self.eliminate(actions)
         winners = []
 
@@ -104,21 +107,25 @@ class Game:
 
     def play_round(self):
         actions = [player.choose_action(self._action_count) for player in self._players]
-        print(
-            "current players: ",
-            [(p.name, get_player_action_info(p)) for p in self._players],
+        log.info(
+            f"current players: {[(p.name, get_player_action_info(p)) for p in self._players]}"
         )
         self._players = self._get_winner(actions)
 
         return self._players
 
-    def play(self):
-        round = 1
-        while len(self._players) > 1:
-            print(f"Round {round}")
-            self.play_round()
-            round += 1
-            print(" ")
+    def reset(self):
+        self._players = self._original_players.copy()
+        self.round_num = 0
+        self.game_num += 1
 
-        print(f"Winner is {self._players[0].name}")
+    def play(self):
+        self.round_num += 1
+        while len(self._players) > 1:
+            log.info(f"Round {round}")
+            self.play_round()
+            self.round_num += 1
+            log.info(" ")
+
+        log.info(f"Winner is {self._players[0].name}")
         return self._players[0].name
