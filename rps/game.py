@@ -13,15 +13,15 @@ class Game:
         if action_count < 0:
             raise ValueError(f"Action count must be greater than or equal to 3")
 
-        if not players or len(players) < 2:
-            raise ValueError(f"Must have at least two players")
+        # if not players or len(players) < 2:
+        #     raise ValueError(f"Must have at least two players")
 
         self._players = players
         self._original_players = players.copy() # for resetting game
         self._action_count = action_count
         self._beats = {}
-        self.round_num = 0
-        self.game_num = 1
+        self._round_num = 1
+        self._game_num = 1
 
         # set beats/game rules created by https://www.umop.com/rps.htm
         if 3 <= action_count <= 15 and action_count % 2 != 0 and action_count != 13:
@@ -39,6 +39,26 @@ class Game:
     @property
     def players(self):
         return self._players
+    
+    @players.setter
+    def players(self, players):
+        self._players = players
+        
+    @property
+    def round_num(self):
+        return self._round_num
+    
+    @round_num.setter
+    def round_num(self, round_num):
+        self._round_num = round_num
+    
+    @property
+    def game_num(self):
+        return self._game_num
+    
+    @game_num.setter
+    def game_num(self, game_num):
+        self._game_num = game_num
 
     def generate_beats(self):
         """generate beats dictionary for games with action size 17 or greater"""
@@ -116,16 +136,15 @@ class Game:
 
     def reset(self):
         self._players = self._original_players.copy()
-        self.round_num = 0
-        self.game_num += 1
+        self._round_num = 1
+        self._game_num += 1
         log.info("game has been reset")
 
     def play(self):
-        self.round_num += 1
         while len(self._players) > 1:
-            log.info(f"Round {self.round_num}")
+            log.info(f"Round {self._round_num}")
             self.play_round()
-            self.round_num += 1
+            self._round_num += 1
             log.info(" ")
 
         log.info(f"Winner is {self._players[0].name}")
